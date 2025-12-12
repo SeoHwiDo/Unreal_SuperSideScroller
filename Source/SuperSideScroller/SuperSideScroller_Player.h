@@ -21,4 +21,5 @@ protected:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	void Sprint();
 	void StopSprinting();
+	void ThrowProjectile();
 };

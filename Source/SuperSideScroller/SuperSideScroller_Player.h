@@ -15,6 +15,7 @@ class SUPERSIDESCROLLER_API ASuperSideScroller_Player : public ASuperSideScrolle
 	GENERATED_BODY()
 
 	bool bIsSprinting;
+	UPROPERTY(EditAnywhere) class UAnimMontage* ThrowMontage;
 public:
 	ASuperSideScroller_Player();
 protected:

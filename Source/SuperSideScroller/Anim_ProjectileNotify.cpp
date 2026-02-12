@@ -2,7 +2,16 @@
 
 
 #include "Anim_ProjectileNotify.h"
-
+#include "Components/SkeletalMeshComponent.h"
+#include "SuperSideScroller/SuperSideScroller_Player.h"
 void UAnim_ProjectileNotify::Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation) {
-	UE_LOG(LogTemp, Warning, TEXT("Throw Notify"));
+	UE_LOG(LogTemp, Warning, TEXT("Start Notify"));
+	ASuperSideScroller_Player* Player = Cast<ASuperSideScroller_Player>(MeshComp->GetOwner());
+	if (Player) {
+		Player->SpawnProjectile();
+	}
+	else {
+		UE_LOG(LogTemp, Warning, TEXT("NULL Player"));
+
+	}
 }

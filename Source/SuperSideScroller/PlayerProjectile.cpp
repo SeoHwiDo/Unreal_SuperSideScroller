@@ -6,6 +6,10 @@
 #include "Components/SphereComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "EnemyBase.h"
+#include "Components/AudioComponent.h"
+#include "Engine/Classes/Particles/ParticleSystemComponent.h"
+#include "Kismet/GameplayStatics.h"
+#include "Engine/World.h"
 
 // Sets default values
 APlayerProjectile::APlayerProjectile()
@@ -26,6 +30,11 @@ APlayerProjectile::APlayerProjectile()
 	MeshComp->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepWorldTransform);//RootComponent에 생성한 스태틱메시 부착 후, 월드트랜스폼을 유지
 	InitialLifeSpan = 3.0f;
 
+	ProjectileMovementSound = CreateDefaultSubobject<UAudioComponent>(TEXT("ProjectileMovementSound"));
+	ProjectileMovementSound->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepWorldTransform);
+	ProjectileEffect = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("ProjectileEffect"));
+	ProjectileEffect->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepWorldTransform);
+
 }
 void APlayerProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit) {
 	AEnemyBase* Enemy = Cast<AEnemyBase>(OtherActor);
@@ -37,6 +46,15 @@ void APlayerProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, 
 }
 void APlayerProjectile::ExplodeProjectile() {
 	Destroy();
+	UWorld* World = GetWorld();
+	if (World) {
+		if (DestroyEffect) {
+			UGameplayStatics::SpawnEmitterAtLocation(World, DestroyEffect, GetActorTransform());
+		}
+		if (DestroySound) {
+			UGameplayStatics::SpawnSoundAtLocation(World, DestroySound, GetActorLocation());
+		}
+	}
 }
 // Called when the game starts or when spawned
 

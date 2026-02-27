@@ -21,8 +21,7 @@ public:
 	APlayerProjectile();
 	UPROPERTY(VisibleDefaultsOnly, Category = Projectile) class USphereComponent* CollisionComp;
 
-	UFUNCTION()
-	void OnHit(UPrimitiveComponent* HitComp, AActor* OhterActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
+	UFUNCTION() void OnHit(UPrimitiveComponent* HitComp, AActor* OhterActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 
 	void ExplodeProjectile();
 	UPROPERTY(EditAnywhere, BlueprintReadOnly) class UParticleSystem* DestroyEffect;

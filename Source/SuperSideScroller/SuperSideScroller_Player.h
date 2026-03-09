@@ -17,9 +17,12 @@ class SUPERSIDESCROLLER_API ASuperSideScroller_Player : public ASuperSideScrolle
 	bool bIsSprinting;
 	UPROPERTY(EditAnywhere) class UAnimMontage* ThrowMontage;
 	UPROPERTY(EditAnywhere) TSubclassOf<class APlayerProjectile> PlayerProjectile;
+	int32 NumberofCollectables;
 public:
 	ASuperSideScroller_Player();
 	void SpawnProjectile();
+	UFUNCTION(BlueprintPure)int32 GetCurrentCollectables() { return NumberofCollectables; };
+	void IncrementNumberofCollectables(int32 Value);
 protected:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	void Sprint();
